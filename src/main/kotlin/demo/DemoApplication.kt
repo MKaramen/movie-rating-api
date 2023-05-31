@@ -2,15 +2,19 @@ package demo
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import java.util.UUID
+import java.util.Optional
+
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Table
+import org.springframework.data.repository.CrudRepository
+
+interface MessageRepository : CrudRepository<Message, String>
 
 @SpringBootApplication
 class DemoApplication
@@ -42,19 +46,20 @@ class CheckHealth
 	@GetMapping("/")
 	fun check(): String = "App is running"
 
-
-data class Message(val id: String?, val text: String)
+@Table("MESSAGES")
+data class Message(@Id var id: String?, val text: String)
 
 
 @Service
-class MessageService(val db: JdbcTemplate) {
-	fun findMessage(): List<Message> = db.query("SELECT * FROM messages") { response, _ -> Message(id=response.getString("id"), text=response.getString("text"))}
+class MessageService(val db: MessageRepository) {
+	fun findMessage(): List<Message> = db.findAll().toList()
 
-	fun getMessage(messageId: String): List<Message> = db.query("SELECT * FROM messages WHERE id='$messageId'") { response, _ -> Message(id=response.getString("id"), text=response.getString("text"))}
+	fun getMessage(messageId: String): List<Message> = db.findById(messageId).toList()
 
 	fun save(message: Message){
-		val id = message.id ?: UUID.randomUUID().toString()
-		db.update("insert into messages values ( ?, ? )",
-			id, message.text)
+		db.save(message)
 	}
+
+	fun <T : Any> Optional<out T>.toList(): List<T> =
+		if (isPresent) listOf(get()) else emptyList()
 }
