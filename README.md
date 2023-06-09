@@ -1,6 +1,6 @@
 # TODO
-- Get movies and rating 
 - Hash password + Spring boot security
+- Delete movie/user(check ratings are deleted same for user)
 - Error handling (404 when resources doesnt exist, handle 500 ...)
 
 ## Next Step 

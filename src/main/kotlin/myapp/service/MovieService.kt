@@ -11,4 +11,6 @@ class MovieService(val db: MovieRepository) {
     fun getMovies(): List<Movie> = db.findAll()
 
     fun getMovie(id:Long): Movie? = db.findByIdOrNull(id)
+
+    fun deleteMovie(id: Long) = db.deleteById(id)
 }
