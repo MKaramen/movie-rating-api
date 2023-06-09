@@ -1,6 +1,7 @@
 package myapp.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
@@ -30,6 +31,7 @@ data class User (
     var createdAt : LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonManagedReference
     var ratings: List<Rating> = mutableListOf()
 ) {
     constructor(username: String, password: String) : this(null, username, password)

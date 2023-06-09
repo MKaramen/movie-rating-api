@@ -1,5 +1,7 @@
 package myapp.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import jakarta.persistence.*
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
@@ -15,11 +17,12 @@ class Rating (
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    val user: User? = null,
+    @JsonBackReference
+    var user: User? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
-    val movie: Movie? = null,
+    var movie: Movie? = null,
 
     @Min(value=0, message= "Rating must be minimum 0")
     @Max(value=10, message="Rating cannot be greater than 10")

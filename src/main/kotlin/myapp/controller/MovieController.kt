@@ -1,9 +1,7 @@
 package myapp.controller
 
-import jakarta.validation.Valid
-import myapp.service.UserService
-import myapp.model.User
-
+import myapp.model.Movie
+import myapp.service.MovieService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -11,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/users")
-class User(val service: UserService) {
+@RequestMapping("/movies")
+class MovieController(val service: MovieService) {
     @GetMapping
-    fun getUsers() = service.getUsers()
+    fun getMovies(): List<Movie> = service.getMovies()
 
     @PostMapping
-    fun createUser(@RequestBody user: User) = service.createUser(user)
+    fun createMovie(@RequestBody movie: Movie): Movie = service.save(movie)
 }

@@ -1,7 +1,8 @@
 package myapp.controller
 
-import myapp.model.Movie
-import myapp.service.MovieService
+import myapp.service.UserService
+import myapp.model.User
+
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -9,13 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/movies")
-class Movie(val service: MovieService) {
+@RequestMapping("/users")
+class UserController(val service: UserService) {
     @GetMapping
-    fun getMovies(): List<Movie> = service.getMovies()
+    fun getUsers() = service.getUsers()
 
     @PostMapping
-    fun createMovie(@RequestBody movie: Movie) {
-        service.save(movie)
-    }
+    fun createUser(@RequestBody user: User) = service.createUser(user)
 }
