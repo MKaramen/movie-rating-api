@@ -1,5 +1,6 @@
 package myapp.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
@@ -22,6 +23,7 @@ data class User (
 
     @NotBlank(message = "Password is required.")
     @Column(nullable=false)
+    @JsonIgnore
     val password: String = "",
 
     @Column(name = "created_at")

@@ -11,20 +11,22 @@ class Rating (
     @Id
     @Column(name="rating_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val ratingId: Int = 0,
+    val id: Long? = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    val user: User,
+    @JoinColumn(name = "user_id", nullable = false)
+    val user: User? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
-    val movie: Movie,
+    @JoinColumn(name = "movie_id", nullable = false)
+    val movie: Movie? = null,
 
     @Min(value=0, message= "Rating must be minimum 0")
     @Max(value=10, message="Rating cannot be greater than 10")
-    val rating: Int,
+    val rating: Int = 0,
 
-    @Column(nullable = false)
-    val timestamp: LocalDateTime
-)
+    @Column(name = "created_at")
+    var createdAt : LocalDateTime = LocalDateTime.now(),
+) {
+    constructor(user: User, movie: Movie, rating: Int) : this(null, user, movie, rating)
+}
