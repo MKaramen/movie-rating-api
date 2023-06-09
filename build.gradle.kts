@@ -16,13 +16,15 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	runtimeOnly("com.h2database:h2")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation(kotlin("stdlib"))
+	implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+
 }
 
 tasks.withType<KotlinCompile> {
