@@ -11,3 +11,4 @@
 
 ## Optional 
 - Implement roles (/users only for dev, create movie specific role ...)
+- Spring boot Actuator (check health)
