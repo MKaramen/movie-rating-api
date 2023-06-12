@@ -1,5 +1,5 @@
 # TODO
-- Hash password + Spring boot security
+- Testing when user is deleted basic auth works properly
 - Delete movie/user(check ratings are deleted same for user)
 - Error handling (404 when resources doesnt exist, handle 500 ...)
 
