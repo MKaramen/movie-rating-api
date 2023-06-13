@@ -27,6 +27,10 @@ data class User (
     @JsonIgnore
     val password: String = "",
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    var role: Role? = null,
+
     @Column(name = "created_at")
     var createdAt : LocalDateTime = LocalDateTime.now(),
 
@@ -34,5 +38,5 @@ data class User (
     @JsonManagedReference
     var ratings: List<Rating> = mutableListOf()
 ) {
-    constructor(username: String, password: String) : this(null, username, password)
+    constructor(username: String, password: String, role: Role) : this(null, username, password, role)
 }

@@ -20,12 +20,9 @@ class RatingController(val service: RatingService, val userService: UserService,
     }
 
     @PostMapping
-    fun createRating(@PathVariable userId: Long, @RequestBody rating: Rating) {
-        val user: User = userService.getUser(userId) ?: throw IllegalArgumentException("User not found")
-        val movie: Movie = rating.movie?.id?.let { movieService.getMovie(it) } ?: throw IllegalArgumentException("Movie not found")
-        rating.user = user
-        rating.movie = movie
-        println(rating.movie)
-        service.createRating(rating)
+    fun createRating(@PathVariable userId: Long, @RequestBody rating: Rating): Rating {
+        rating.user = userService.getUser(userId) ?: throw IllegalArgumentException("User not found")
+        rating.movie = rating.movie?.id?.let { movieService.getMovie(it) } ?: throw IllegalArgumentException("Movie not found")
+        return service.createRating(rating)
     }
 }
