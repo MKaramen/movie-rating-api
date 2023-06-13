@@ -5,6 +5,7 @@ package myapp.config
 import myapp.repository.UserRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -25,9 +26,12 @@ class SecurityConfig(private val userRepository: UserRepository, private val use
     open fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
             authorizeRequests {
+                authorize(method = HttpMethod.POST, pattern = "/movies", authenticated)
+                authorize(method = HttpMethod.POST, pattern = "/users", authenticated)
                 authorize("/", permitAll)
                 authorize(anyRequest, authenticated)
             }
+            csrf { disable() }
             httpBasic {}
         }
         return http.build()
