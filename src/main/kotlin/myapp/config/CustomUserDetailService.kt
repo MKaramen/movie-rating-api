@@ -1,6 +1,7 @@
 package myapp.config
 
 import myapp.repository.UserRepository
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -14,11 +15,12 @@ class CustomUserDetailService(private val userRepository: UserRepository) : User
         val user = userRepository.findByUsername(username)
             ?: throw UsernameNotFoundException("User not found")
 
-        // You might need to adjust the implementation to fetch the plain-text password from the user entity
+        val authority = SimpleGrantedAuthority(user.role?.name)
+
         return User(
             user.username,
             user.password,
-            emptyList()
+            listOf(authority)
         )
     }
 }

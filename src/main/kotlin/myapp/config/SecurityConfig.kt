@@ -26,8 +26,8 @@ class SecurityConfig(private val userRepository: UserRepository, private val use
     open fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
             authorizeRequests {
-                authorize(method = HttpMethod.POST, pattern = "/movies", authenticated)
-                authorize(method = HttpMethod.POST, pattern = "/users", authenticated)
+                authorize(method = HttpMethod.POST, pattern = "/movies", hasAuthority("user"))
+                authorize(pattern = "/users", hasAuthority("admin"))
                 authorize("/", permitAll)
                 authorize(anyRequest, authenticated)
             }
