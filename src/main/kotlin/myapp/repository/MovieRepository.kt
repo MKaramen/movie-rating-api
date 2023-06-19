@@ -3,4 +3,6 @@ package myapp.repository
 import myapp.model.Movie
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface MovieRepository: JpaRepository<Movie, Long>
+interface MovieRepository: JpaRepository<Movie, Long> {
+    fun existsByName(name: String): Boolean
+}

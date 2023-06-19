@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class MovieService(val db: MovieRepository) {
-    fun save(movie: Movie)  = db.save(movie)
+    fun checkMovie(id: Long): Boolean = db.existsById(id)
+    fun checkMovieByName(name: String): Boolean = db.existsByName(name)
+
+    fun save(movie: Movie) = db.save(movie)
     fun getMovies(): List<Movie> = db.findAll()
 
     fun getMovie(id:Long): Movie? = db.findByIdOrNull(id)
